@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+
+# Secrets & config locale (garder un fichier *example* versionné)
+config.ini
+config_local.py
+.env
+*.pem
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# Build / dist
+build/
+dist/
+*.egg-info/
