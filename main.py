@@ -1,6 +1,9 @@
 """
 Point d'entrée — Gestion d'une clinique (CustomTkinter + MySQL).
 Lancer depuis la racine du projet : python main.py
+
+Réf. interface : documentation officielle CustomTkinter
+https://customtkinter.tomschimansky.com/documentation/
 """
 
 from __future__ import annotations
