@@ -12,6 +12,7 @@ from ui.stats_view import StatsView
 class MainWindow(ctk.CTk):
     def __init__(self) -> None:
         super().__init__()
+        self.wants_relogin = False
         self.title("Gestion d'une clinique")
         self.minsize(1080, 720)
         self.geometry("1240x780")
@@ -59,7 +60,25 @@ class MainWindow(ctk.CTk):
             view.grid_remove()
             self._views[key] = view
 
+        ctk.CTkFrame(nav, fg_color="transparent").pack(
+            fill="both", expand=True, pady=4
+        )
+        ctk.CTkButton(
+            nav,
+            text="Déconnexion",
+            anchor="center",
+            height=36,
+            fg_color="transparent",
+            border_width=1,
+            text_color=("gray10", "#DCE4EE"),
+            command=self._logout,
+        ).pack(fill="x", padx=12, pady=(8, 20))
+
         self.show_view("patients")
+
+    def _logout(self) -> None:
+        self.wants_relogin = True
+        self.destroy()
 
     def show_view(self, key: str) -> None:
         if self._current and self._current in self._views:

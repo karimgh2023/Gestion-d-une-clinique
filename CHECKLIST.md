@@ -48,7 +48,7 @@ Pour **chaque** entité principale :
 
 - [x] **Menu** (barre) **ou** **sidebar** : accès explicite à chaque module (Patients, Médecins, RDV, Prescriptions).
 - [x] **Fenêtre principale** redimensionnable avec **taille minimale** définie (`minsize` / équivalent CTk).
-- [ ] *(Optionnel mais valorisé)* **Authentification** : fenêtre de connexion, compte(s) utilisateur ; ne **jamais** stocker les mots de passe en clair (hash + sel, ou comptes de démo documentés hors code).
+- [x] *(Optionnel mais valorisé)* **Authentification** : fenêtre de connexion, compte(s) utilisateur ; ne **jamais** stocker les mots de passe en clair (hash + sel, ou comptes de démo documentés hors code).
 
 ---
 
@@ -123,7 +123,7 @@ Pour **chaque** entité principale :
 
 ## Prochaine étape recommandée
 
-- [ ] **Authentification** (login + mot de passe hashé) — optionnel mais valorisé au cahier des charges.
+- [x] **Authentification** (login + mot de passe hashé).
 - [ ] **Rendu** : générer l’archive `Nom_Prénom_Projet.zip` selon consignes enseignant.
 
 Bonne réalisation.

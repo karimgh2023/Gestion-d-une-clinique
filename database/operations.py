@@ -286,3 +286,18 @@ def stats_summary() -> dict[str, Any]:
     finally:
         cursor.close()
         conn.close()
+
+
+# --- Authentification ---
+def auth_fetch_by_login(login: str) -> dict[str, Any] | None:
+    row = _run(
+        """
+        SELECT id, login, pass_salt_hex, pass_hash_hex
+        FROM utilisateurs
+        WHERE login = %s
+        LIMIT 1
+        """,
+        (login,),
+        fetch="one",
+    )
+    return row
