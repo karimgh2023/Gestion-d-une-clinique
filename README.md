@@ -68,6 +68,130 @@ Bouton **Déconnexion** dans la barre latérale : retour à l’écran de connex
 - `sql/schema.sql` — schéma + données de test + compte démo
 - `sql/migration_add_utilisateurs.sql` — ajout auth sur une base déjà créée
 
+## Architecture (diagrammes)
+
+Les diagrammes ci-dessous utilisent la syntaxe [Mermaid](https://mermaid.js.org/) : ils s’affichent **directement sur la page GitHub** du dépôt ; en local, utilisez une prévisualisation Markdown compatible (VS Code + extension Mermaid, ou [mermaid.live](https://mermaid.live)).
+
+### Flux d’exécution
+
+```mermaid
+flowchart LR
+  subgraph config [Configuration]
+    INI[config.ini / config.example.ini]
+  end
+
+  subgraph app [Application Python]
+    M[main.py]
+    L[LoginWindow]
+    W[MainWindow]
+    V[Patients / Médecins / RDV / Prescriptions / Stats]
+    M --> L
+    L -->|succès| W
+    W --> V
+    W -->|Déconnexion| L
+  end
+
+  subgraph data [Accès données]
+    CONN[connection.py]
+    OPS[operations.py]
+    PW[auth/passwords.py]
+  end
+
+  subgraph db [MySQL]
+    SQL[(clinique_db)]
+  end
+
+  INI --> CONN
+  L --> OPS
+  L --> PW
+  V --> OPS
+  OPS --> CONN
+  CONN --> SQL
+```
+
+### Modules et dépendances
+
+```mermaid
+flowchart TB
+  main_py[main.py]
+
+  subgraph ui [ui/]
+    login[login_window.py]
+    mw[main_window.py]
+    pv[patients_view.py]
+    mv[medecins_view.py]
+    rv[rendezvous_view.py]
+    prv[prescriptions_view.py]
+    sv[stats_view.py]
+    tt[tree_table.py]
+    hl[helpers.py]
+  end
+
+  subgraph database [database/]
+    conn[connection.py]
+    ops[operations.py]
+  end
+
+  subgraph auth [auth/]
+    pwd[passwords.py]
+  end
+
+  main_py --> login
+  main_py --> mw
+
+  login --> ops
+  login --> pwd
+
+  mw --> pv
+  mw --> mv
+  mw --> rv
+  mw --> prv
+  mw --> sv
+
+  pv --> ops
+  pv --> tt
+  pv --> hl
+  mv --> ops
+  mv --> tt
+  mv --> hl
+  rv --> ops
+  rv --> tt
+  rv --> hl
+  prv --> ops
+  prv --> tt
+  prv --> hl
+  sv --> ops
+
+  ops --> conn
+```
+
+### Couches (vue synthétique)
+
+```mermaid
+flowchart TB
+  subgraph presentation [Présentation — CustomTkinter + ttk]
+    UI[ui/* — fenêtres, formulaires, Treeview]
+  end
+
+  subgraph metier [Accès BDD]
+    DB[database/operations.py — CRUD, stats, auth]
+  end
+
+  subgraph securite [Mots de passe]
+    AUTH[auth/passwords.py — PBKDF2]
+  end
+
+  subgraph persistance [Persistance]
+    C[database/connection.py]
+    MY[(MySQL — patients, medecins, rendez_vous, prescriptions, utilisateurs)]
+  end
+
+  UI --> DB
+  UI --> AUTH
+  DB --> C
+  C --> MY
+```
+
 ## Contrôle manuel (avant soutenance)
 
 À vérifier une fois la base importée et `config.ini` renseigné :
