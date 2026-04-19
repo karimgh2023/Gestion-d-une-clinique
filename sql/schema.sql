@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS prescriptions (
   CONSTRAINT chk_duree CHECK (duree_jours > 0)
 ) ENGINE=InnoDB;
 
--- Comptes application (mot de passe = hash PBKDF2, jamais en clair)
+-- utilisateurs
 CREATE TABLE IF NOT EXISTS utilisateurs (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   login VARCHAR(64) NOT NULL,
@@ -102,8 +102,7 @@ INSERT INTO prescriptions (patient_id, medecin_id, date_prescription, medicament
   (1, 1, '2026-04-10', 'Bisoprolol 2,5 mg', '1 comprimé le matin', 30),
   (3, 3, '2026-04-16', 'Paracétamol 500 mg', '1 à 2 cp toutes les 6 h si douleur', 7);
 
--- Compte démo : login `admin`, mot de passe `admin123` (à changer en production)
--- Généré avec PBKDF2-HMAC-SHA256, 150000 itérations (voir auth/passwords.py)
+-- Compte démo : login `admin`, mot de passe `admin123` 
 INSERT INTO utilisateurs (login, pass_salt_hex, pass_hash_hex) VALUES
   (
     'admin',

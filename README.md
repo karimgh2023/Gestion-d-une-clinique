@@ -192,13 +192,3 @@ flowchart TB
   C --> MY
 ```
 
-## Contrôle manuel (avant soutenance)
-
-À vérifier une fois la base importée et `config.ini` renseigné :
-
-- **Patients** : ajout avec champs vides (message d’erreur) ; doublon de **n° dossier** ou **email** (message MySQL clair) ; modification puis suppression (avec RDV existant : refus si FK).
-- **Médecins** : email dupliqué ; suppression d’un médecin lié à un RDV (refus).
-- **Rendez-vous** : même créneau pour le même médecin (contrainte `UNIQUE`) ; recherche / tri / export CSV sur les lignes filtrées.
-- **Prescriptions** : durée ≤ 0 refusée ; export après filtre.
-- **Statistiques** : bouton « Actualiser » après ajout de données.
-- **Connexion** : mauvais mot de passe ; identifiant inconnu ; après migration, vérifier que la table `utilisateurs` existe.

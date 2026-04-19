@@ -8,7 +8,6 @@ from __future__ import annotations
 import hashlib
 import secrets
 
-# Doit rester aligné avec les comptes insérés dans sql/schema.sql (sel / hash pré-calculés).
 PBKDF2_ITERATIONS = 150_000
 
 
